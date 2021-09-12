@@ -8,17 +8,17 @@ Following these guidelines helps to communicate that you respect the time of the
 
 ## What to do
 
-<!-- [WRITE]/TODO --> is an open source project and we love to receive contributions from our community! There are many ways to contribute, from improving the documentation, submitting bug reports and feature requests or writing code.
+Filehasher is an open source project and we love to receive contributions from our community! There are many ways to contribute, from improving the documentation, submitting bug reports and feature requests or writing code.
 
 ## Rules
 
 * Fill issue templates, use labels.
 * If you are making a not small pull request, create an issue first, with the *Issue before pr* label.
 * Read the [code of conduct](CODE_OF_CONDUCT.md).
-<!-- * [Run tests](https://github.com/koviubi56/YUU8/blob/main/.travis.yml#L12). [WRITE]/TODO -->
+* [Run tests](https://github.com/koviubi56/filehasher/blob/main/.travis.yml#L12).
 * Search open **and closed** issues **and** pull requests.
-* Please, **don't** open an issue for questions. [Ask it here!](https://github.com/koviubi56/YUU8/discussions/categories/q-a) <!-- [WRITE]/TODO -->
-* Make sure to put an X to the square brackets at the end of the issue, if you read the contributing guidlines, and the code of conduct. **If you don't put an X to all of them, your issue will be closed!**
+* Please, **don't** open an issue for questions. [Ask it here!](https://github.com/koviubi56/filehasher/discussions/categories/q-a)
+* Make sure to put an X to the square brackets at the end of the issue, if you read the contributing guidlines, and the code of conduct. **If you don't put an X to all of them, your issue/pr will be closed!**
 
 ## Pull requests
 

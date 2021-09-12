@@ -2,7 +2,7 @@
 
 ## Report security vulnerability
 
-**[Report here!](<!-- [WRITE]/TODO -->)**
+**[Report here!](https://github.com/koviubi56/filehasher/issues/new?assignees=&labels=Type%3A+Bug&template=bug_report.md&title=)**
 
 *Open an issue, and give it the "bug", and the "priority: high" labels!*
 
