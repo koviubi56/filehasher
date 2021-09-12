@@ -87,9 +87,9 @@ def main(
     file = values["-FILE-"] if not _batch_mode(batch_mode) else batch_mode["file"]
 
     try:
-        with open(file) as f:
+        with open(file, "rb") as f:
             while True:
-                data = f.read(64_000).encode()
+                data = f.read(64_000)
                 if not data:
                     break
                 md5.update(data)
