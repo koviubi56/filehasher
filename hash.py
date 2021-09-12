@@ -214,7 +214,7 @@ def main(
                                 }
                             ).replace("'", '"')
                         )
-                except:
+                except BaseException:
                     raise
                 else:
                     sg.Popup(f"Exported hashes to {file}.hash!")
