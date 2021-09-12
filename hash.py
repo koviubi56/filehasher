@@ -84,10 +84,10 @@ def main(
     sha3_384 = hashlib.sha3_384()
     sha224 = hashlib.sha224()
 
+    file = values["-FILE-"] if not _batch_mode(batch_mode) else batch_mode["file"]
+
     try:
-        with open(
-            values["-FILE-"] if not _batch_mode(batch_mode) else batch_mode["file"]
-        ) as f:
+        with open(file) as f:
             while True:
                 data = f.read(64_000).encode()
                 if not data:
@@ -172,11 +172,41 @@ def main(
                         sg.Text("Paste a hash: "),
                         sg.InputText(key="-HASH-"),
                     ],
-                    [sg.OK("Check hash or exit")],
+                    [
+                        sg.OK("Check hash or exit"),
+                        sg.Button(
+                            "Export hashes",
+                            key="-EXPORT-",
+                            tooltip=f"Warning! The file {file}.hash will be overwritten if exists!",
+                        ),
+                    ],
                 ],
             ).read()
             if event == sg.WIN_CLOSED:
                 exit()
+            if event == "-EXPORT-":
+                with open(f"{file}.hash", "w") as f:
+                    f.write(
+                        str(
+                            {
+                                h.name: h.hexdigest()
+                                for h in {
+                                    md5,
+                                    sha1,
+                                    sha256,
+                                    sha512,
+                                    sha3_512,
+                                    blake2s,
+                                    sha384,
+                                    sha3_256,
+                                    sha3_224,
+                                    blake2b,
+                                    sha3_384,
+                                    sha224,
+                                }
+                            }
+                        ).replace("'", '"')
+                    )
             if values["-HASH-"] == "":
                 exit()
             if values["-HASH-"].lower() == md5.hexdigest().lower():
