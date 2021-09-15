@@ -233,7 +233,7 @@ def main(
                         else:
                             sg.Popup("Does not match! You may got hacked.")
                 except FileNotFoundError:
-                    sg.popup_error(f'File not found!')
+                    sg.popup_error("File not found!")
             if event == "-CHECK-":
                 if values["-HASH-"] == "":
                     exit()
@@ -284,7 +284,8 @@ def main(
 
 
 if __name__ == "__main__":
-    print("""This program is free software: you can redistribute it and/or modify
+    print(
+        """This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published
 by the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
@@ -295,9 +296,18 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU Affero General Public License for more details.
 
 You should have received a copy of the GNU Affero General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.""")
+along with this program.  If not, see <https://www.gnu.org/licenses/>."""
+    )
     try:
         main()
     except Exception:
         from traceback import format_exc
-        sg.Print("An error happened. \n", "\nThis MAY happen, because:\n", "* The OS/your antivirus blocked filehasher,\n", "* There is a bug in filehasher.\n", "\nIf you think, that this is a bug, report it, at https://github.com/koviubi56/filehasher/issues/new?assignees=&labels=Type%3A+Bug&template=bug_report.md&title=\n**PLEASE** include this as well:\n", "\n\n" + format_exc())
+
+        sg.Print(
+            "An error happened. \n",
+            "\nThis MAY happen, because:\n",
+            "* The OS/your antivirus blocked filehasher,\n",
+            "* There is a bug in filehasher.\n",
+            "\nIf you think, that this is a bug, report it, at https://github.com/koviubi56/filehasher/issues/new?assignees=&labels=Type%3A+Bug&template=bug_report.md&title=\n**PLEASE** include this as well:\n",
+            "\n\n" + format_exc(),
+        )
