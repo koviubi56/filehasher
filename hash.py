@@ -38,7 +38,7 @@ def main(
         batch_mode (Dict[Union[Literal["enabled", "file"]], Union[bool, str]]): Batch mode settings. Syntax:
     ```py
     {
-        "enabled": bool  # Enabled?
+        "enabled": bool,  # Enabled?
         # --- If enabled: ---
         "file": str  # The file. It will be opened as "with open(FILE) as f: ..."
     }
