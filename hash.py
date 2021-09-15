@@ -219,18 +219,21 @@ def main(
                 else:
                     sg.Popup(f"Exported hashes to {file}.hash!")
             if event == "-IMPORT-":
-                with open(f"{file}.hash") as f:
-                    fc = load(f)
-                    if (
-                        sha512.hexdigest().lower() == fc["sha512"].lower()
-                        and sha256.hexdigest().lower() == fc["sha256"].lower()
-                    ):
-                        sg.Popup(
-                            "Matches!",
-                            "(We didn't check every hash. We just checked SHA256 and SHA512)",
-                        )
-                    else:
-                        sg.Popup("Does not match! You may got hacked.")
+                try:
+                    with open(f"{file}.hash") as f:
+                        fc = load(f)
+                        if (
+                            sha512.hexdigest().lower() == fc["sha512"].lower()
+                            and sha256.hexdigest().lower() == fc["sha256"].lower()
+                        ):
+                            sg.Popup(
+                                "Matches!",
+                                "(We didn't check every hash. We just checked SHA256 and SHA512)",
+                            )
+                        else:
+                            sg.Popup("Does not match! You may got hacked.")
+                except FileNotFoundError:
+                    sg.popup_error(f'File not found!')
             if event == "-CHECK-":
                 if values["-HASH-"] == "":
                     exit()
@@ -262,7 +265,7 @@ def main(
                     sg.Popup("Incorrect hash! You may got hacked!")
     if _batch_mode(batch_mode):
         return {
-            h.name: h
+            h.name: h.hexdigest()
             for h in {
                 md5,
                 sha1,
@@ -281,4 +284,20 @@ def main(
 
 
 if __name__ == "__main__":
-    main()
+    print("""This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published
+by the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.""")
+    try:
+        main()
+    except Exception:
+        from traceback import format_exc
+        sg.Print("An error happened. \n", "\nThis MAY happen, because:\n", "* The OS/your antivirus blocked filehasher,\n", "* There is a bug in filehasher.\n", "\nIf you think, that this is a bug, report it, at https://github.com/koviubi56/filehasher/issues/new?assignees=&labels=Type%3A+Bug&template=bug_report.md&title=\n**PLEASE** include this as well:\n", "\n\n" + format_exc())
