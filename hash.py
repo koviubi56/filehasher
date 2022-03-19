@@ -88,7 +88,7 @@ def main(
     sha3_384 = hashlib.sha3_384()
     sha224 = hashlib.sha224()
 
-    file = values["-FILE-"] if not _batch_mode(batch_mode) else batch_mode["file"]
+    file = batch_mode["file"] if _batch_mode(batch_mode) else values["-FILE-"]
 
     try:
         with open(file, "rb") as f:
