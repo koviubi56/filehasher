@@ -2,6 +2,7 @@
 
 [![Build Status](https://app.travis-ci.com/koviubi56/filehasher.svg?branch=main)](https://app.travis-ci.com/koviubi56/filehasher)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/35f52ab86273406f9ae7305733ad7233)](https://www.codacy.com/gh/koviubi56/filehasher/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=koviubi56/filehasher&amp;utm_campaign=Badge_Grade)
+[![CodeFactor](https://www.codefactor.io/repository/github/koviubi56/filehasher/badge)](https://www.codefactor.io/repository/github/koviubi56/filehasher)
 
 Filehasher can hash a file, and compare the user's hash and the file's hash.
 
