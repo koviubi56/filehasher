@@ -18,7 +18,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import hashlib
 from typing import Dict, Literal, Union
 import PySimpleGUI as sg
-from sys import exit
 from json import load
 
 
@@ -27,9 +26,9 @@ def _batch_mode(settings: dict) -> bool:
 
 
 def main(
-    batch_mode: Dict[Union[Literal["enabled", "file"]], Union[bool, str]] = {
-        "enabled": False
-    }
+    batch_mode: Dict[
+        Union[Literal["enabled", "file"]], Union[bool, str]
+    ] = {"enabled": False}
 ):
     """
     The main function
@@ -58,7 +57,9 @@ def main(
             [
                 [
                     sg.FileBrowse(
-                        key="-FILE-", button_text="Browse a file", enable_events=True
+                        key="-FILE-",
+                        button_text="Browse a file",
+                        enable_events=True,
                     ),
                 ],
                 [
@@ -73,7 +74,7 @@ def main(
         window.close()
 
         if event == sg.WIN_CLOSED:
-            exit()
+            return
 
     md5 = hashlib.md5()
     sha1 = hashlib.sha1()
@@ -88,7 +89,11 @@ def main(
     sha3_384 = hashlib.sha3_384()
     sha224 = hashlib.sha224()
 
-    file = batch_mode["file"] if _batch_mode(batch_mode) else values["-FILE-"]
+    file = (
+        batch_mode["file"]
+        if _batch_mode(batch_mode)
+        else values["-FILE-"]
+    )
 
     try:
         with open(file, "rb") as f:
@@ -117,7 +122,7 @@ def main(
             custom_text=("Error"),
             title="Error",
         )
-        exit(1)
+        raise SystemExit(1)
     if not _batch_mode(batch_mode):
         while True:
             window = sg.Window(
@@ -125,51 +130,87 @@ def main(
                 [
                     [
                         sg.Text("MD5: "),
-                        sg.InputText(default_text=md5.hexdigest(), disabled=True),
+                        sg.InputText(
+                            default_text=md5.hexdigest(),
+                            disabled=True,
+                        ),
                     ],
                     [
                         sg.Text("SHA1: "),
-                        sg.InputText(default_text=sha1.hexdigest(), disabled=True),
+                        sg.InputText(
+                            default_text=sha1.hexdigest(),
+                            disabled=True,
+                        ),
                     ],
                     [
                         sg.Text("SHA256: "),
-                        sg.InputText(default_text=sha256.hexdigest(), disabled=True),
+                        sg.InputText(
+                            default_text=sha256.hexdigest(),
+                            disabled=True,
+                        ),
                     ],
                     [
                         sg.Text("SHA512: "),
-                        sg.InputText(default_text=sha512.hexdigest(), disabled=True),
+                        sg.InputText(
+                            default_text=sha512.hexdigest(),
+                            disabled=True,
+                        ),
                     ],
                     [
                         sg.Text("SHA3 512: "),
-                        sg.InputText(default_text=sha3_512.hexdigest(), disabled=True),
+                        sg.InputText(
+                            default_text=sha3_512.hexdigest(),
+                            disabled=True,
+                        ),
                     ],
                     [
                         sg.Text("Blake2s: "),
-                        sg.InputText(default_text=blake2s.hexdigest(), disabled=True),
+                        sg.InputText(
+                            default_text=blake2s.hexdigest(),
+                            disabled=True,
+                        ),
                     ],
                     [
                         sg.Text("SHA384: "),
-                        sg.InputText(default_text=sha384.hexdigest(), disabled=True),
+                        sg.InputText(
+                            default_text=sha384.hexdigest(),
+                            disabled=True,
+                        ),
                     ],
                     [
                         sg.Text("SHA3 256: "),
-                        sg.InputText(default_text=sha3_256.hexdigest(), disabled=True),
+                        sg.InputText(
+                            default_text=sha3_256.hexdigest(),
+                            disabled=True,
+                        ),
                     ],
                     [
                         sg.Text("SHA3 224: "),
-                        sg.InputText(default_text=sha3_224.hexdigest(), disabled=True),
+                        sg.InputText(
+                            default_text=sha3_224.hexdigest(),
+                            disabled=True,
+                        ),
                     ],
                     [
                         sg.Text("Blake2b: "),
-                        sg.InputText(default_text=blake2b.hexdigest(), disabled=True),
+                        sg.InputText(
+                            default_text=blake2b.hexdigest(),
+                            disabled=True,
+                        ),
                     ],
                     [
                         sg.Text("SHA3 384: "),
-                        sg.InputText(default_text=sha3_384.hexdigest(), disabled=True),
+                        sg.InputText(
+                            default_text=sha3_384.hexdigest(),
+                            disabled=True,
+                        ),
                     ],
                     [
                         sg.Text("SHA224: "),
-                        sg.InputText(default_text=sha224.hexdigest(), disabled=True),
+                        sg.InputText(
+                            default_text=sha224.hexdigest(),
+                            disabled=True,
+                        ),
                     ],
                     [
                         sg.Text("Paste a hash: "),
@@ -182,14 +223,16 @@ def main(
                             key="-EXPORT-",
                             tooltip=f"Warning! The file {file}.hash will be overwritten if exists!",
                         ),
-                        sg.Button("Check hash from file", key="-IMPORT-"),
+                        sg.Button(
+                            "Check hash from file", key="-IMPORT-"
+                        ),
                     ],
                 ],
             )
             event, values = window.read()
             window.close()
             if event == sg.WIN_CLOSED:
-                exit()
+                return
             if event == "-EXPORT-":
                 try:
                     with open(f"{file}.hash", "w") as f:
@@ -223,43 +266,83 @@ def main(
                     with open(f"{file}.hash") as f:
                         fc = load(f)
                         if (
-                            sha512.hexdigest().lower() == fc["sha512"].lower()
-                            and sha256.hexdigest().lower() == fc["sha256"].lower()
+                            sha512.hexdigest().lower()
+                            == fc["sha512"].lower()
+                            and sha256.hexdigest().lower()
+                            == fc["sha256"].lower()
                         ):
                             sg.Popup(
                                 "Matches!",
                                 "(We didn't check every hash. We just checked SHA256 and SHA512)",
                             )
                         else:
-                            sg.Popup("Does not match! You may got hacked.")
+                            sg.Popup(
+                                "Does not match! You may got hacked."
+                            )
                 except FileNotFoundError:
                     sg.popup_error("File not found!")
             if event == "-CHECK-":
                 if values["-HASH-"] == "":
-                    exit()
-                if values["-HASH-"].lower() == md5.hexdigest().lower():
+                    return
+                if (
+                    values["-HASH-"].lower()
+                    == md5.hexdigest().lower()
+                ):
                     sg.Popup("Correct MD5 hash!")
-                elif values["-HASH-"].lower() == sha1.hexdigest().lower():
+                elif (
+                    values["-HASH-"].lower()
+                    == sha1.hexdigest().lower()
+                ):
                     sg.Popup("Correct SHA1 hash!")
-                elif values["-HASH-"].lower() == sha256.hexdigest().lower():
+                elif (
+                    values["-HASH-"].lower()
+                    == sha256.hexdigest().lower()
+                ):
                     sg.Popup("Correct SHA256 hash!")
-                elif values["-HASH-"].lower() == sha512.hexdigest().lower():
+                elif (
+                    values["-HASH-"].lower()
+                    == sha512.hexdigest().lower()
+                ):
                     sg.Popup("Correct SHA512 hash!")
-                elif values["-HASH-"].lower() == sha3_512.hexdigest().lower():
+                elif (
+                    values["-HASH-"].lower()
+                    == sha3_512.hexdigest().lower()
+                ):
                     sg.Popup("Correct SHA3 512 hash!")
-                elif values["-HASH-"].lower() == blake2s.hexdigest().lower():
+                elif (
+                    values["-HASH-"].lower()
+                    == blake2s.hexdigest().lower()
+                ):
                     sg.Popup("Correct Blake2s hash!")
-                elif values["-HASH-"].lower() == sha384.hexdigest().lower():
+                elif (
+                    values["-HASH-"].lower()
+                    == sha384.hexdigest().lower()
+                ):
                     sg.Popup("Correct SHA384 hash!")
-                elif values["-HASH-"].lower() == sha3_256.hexdigest().lower():
+                elif (
+                    values["-HASH-"].lower()
+                    == sha3_256.hexdigest().lower()
+                ):
                     sg.Popup("Correct SHA3 256 hash!")
-                elif values["-HASH-"].lower() == sha3_224.hexdigest().lower():
+                elif (
+                    values["-HASH-"].lower()
+                    == sha3_224.hexdigest().lower()
+                ):
                     sg.Popup("Correct SHA3 224 hash!")
-                elif values["-HASH-"].lower() == blake2b.hexdigest().lower():
+                elif (
+                    values["-HASH-"].lower()
+                    == blake2b.hexdigest().lower()
+                ):
                     sg.Popup("Correct Blake2b hash!")
-                elif values["-HASH-"].lower() == sha3_384.hexdigest().lower():
+                elif (
+                    values["-HASH-"].lower()
+                    == sha3_384.hexdigest().lower()
+                ):
                     sg.Popup("Correct SHA3 384 hash!")
-                elif values["-HASH-"].lower() == sha224.hexdigest().lower():
+                elif (
+                    values["-HASH-"].lower()
+                    == sha224.hexdigest().lower()
+                ):
                     sg.Popup("Correct SHA224 hash!")
                 else:
                     sg.Popup("Incorrect hash! You may got hacked!")
